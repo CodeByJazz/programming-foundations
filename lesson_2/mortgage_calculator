@@ -1,0 +1,85 @@
+def prompt(message)
+  puts("=> #{message}")
+end
+
+def valid_number?(num)
+  num.to_i() != 0
+end
+
+prompt("Welcome to the Mortgage Calculator! Enter your name:")
+prompt("----------------------------------------------------")
+
+name = ''
+loop do
+  name = Kernel.gets.chomp.capitalize
+
+  if name.empty?
+    prompt("Make sure to use a valid name.")
+  else
+    break
+  end
+end
+
+prompt("Hi #{name}!")
+
+loop do # main loop
+  loan_amount = ''
+  loop do
+    prompt("What's the loan amount?")
+    loan_amount = gets.chomp.to_i
+
+    if valid_number?(loan_amount)
+      break
+    else
+      prompt("Please enter a valid number")
+    end
+  end
+
+  months = ''
+  loop do
+    prompt("What's the loan duration in months?")
+    months = gets.chomp.to_i
+
+    if valid_number?(months)
+      break
+    else
+      prompt("Please enter a valid number")
+    end
+  end
+
+  annual_percentage_rate = ''
+  loop do
+    prompt("What's the Annual Percentage Rate (APR)?")
+    prompt("(Example: 5 for 5% or 2.5 for 2.5%)")
+    annual_percentage_rate = gets.chomp.to_f
+
+    if valid_number?(annual_percentage_rate)
+      break
+    else
+      prompt("Please enter a valid number")
+    end
+  end
+
+  monthly_interest_rate = (annual_percentage_rate / 100) / 12
+
+  monthly_payment = loan_amount *
+                    (monthly_interest_rate / 
+                    (1 - (1 + monthly_interest_rate)**(-months)))
+
+  loan_info = <<-MSG
+    Loan Amount: $#{loan_amount}
+    Loan Duration: #{months} months
+    Annual Percentage Rate: #{annual_percentage_rate}%
+    Monthly Interest Rate: #{monthly_interest_rate.round(4)}%
+    Monthly Payment Due: $#{monthly_payment.round(2)}
+
+  MSG
+
+  prompt(loan_info)
+
+  prompt("Do you want to perform another calculation? (Y to calculate again)")
+  answer = gets.chomp
+  break unless answer.downcase().start_with?('y')
+end
+
+prompt("Thank you for using the Mortgage Calculator. Good bye, #{name}!")
