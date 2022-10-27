@@ -23,11 +23,33 @@ def total(cards)
     end
   end
 
+  #correct for Aces
   values.select { |value| value == "A" }.count.times do 
     sum -= 10 if sum > 21
   end
 
   sum
+end
+
+def busted?(cards)
+  total(cards) > 21
+end
+
+def detect_result(dealer_cards, player_cards)
+  player_total = total(player_cards)
+  dealer_total = total(dealer_cards)
+
+  if player_total > 21
+    :player_busted
+  elsif dealer_total > 21
+    :dealer_busted
+  elsif dealer_total < player_total
+    :player
+  elsif dealer_total > player_total
+    :dealer
+  else
+    :tie 
+  end
 end
 
 answer = nil
