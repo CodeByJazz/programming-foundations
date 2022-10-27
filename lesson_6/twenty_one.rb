@@ -69,6 +69,13 @@ def dispaly_result(dealer_cards, player_cards)
   end
 end
 
+def play_again?
+  puts "-------------"
+  prompt "Do you want to play again? (y or n)"
+  answer = gets.chomp
+  answer.downcase.start_with?('y')
+end
+
 answer = nil
 loop do 
   puts "hit or stay?"
