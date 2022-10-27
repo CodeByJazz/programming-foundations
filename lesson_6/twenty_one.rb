@@ -5,6 +5,10 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
+def initialize_deck
+  SUITS.product(VALUES).shuffle
+end
+
 def total(cards)
   values = cards.map { |card| card[1] }
 
