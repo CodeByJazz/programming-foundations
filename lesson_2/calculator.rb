@@ -84,7 +84,6 @@ loop do #main loop
     end
   end
 
-
   prompt("#{operation_to_message(operator)} the two numbers...")
 
   result = case operator
